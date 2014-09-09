@@ -1,0 +1,47 @@
+{
+  "name": "wrap-command",
+  "version": "0.0.0",
+  "description": "Command implementation based on `wrap-range` and `unwrap-range`",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "tsc --module commonjs --declaration index.ts",
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webmodules/wrap-command.git"
+  },
+  "keywords": [
+    "browser",
+    "dom",
+    "command",
+    "wrap-range",
+    "unwrap-range",
+    "wrap",
+    "unwrap",
+    "range",
+    "bold",
+    "italic",
+    "underline",
+    "strikethrough",
+    "strike"
+  ],
+  "author": "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webmodules/wrap-command/issues"
+  },
+  "homepage": "https://github.com/webmodules/wrap-command",
+  "dependencies": {
+    "component-closest": "~0.1.4",
+    "current-range": "~1.1.0",
+    "current-selection": "~1.1.0",
+    "debug": "~2.0.0",
+    "unwrap-range": "0.0.1",
+    "wrap-range": "0.0.2"
+  },
+  "devDependencies": {
+    "typescript": "~1.0.1",
+    "zuul": "~1.10.2"
+  }
+}
