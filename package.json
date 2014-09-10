@@ -1,6 +1,6 @@
 {
   "name": "wrap-command",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Command implementation based on `wrap-range` and `unwrap-range`",
   "main": "index.js",
   "scripts": {
