@@ -10,6 +10,10 @@ import Command = require('command');
  * JavaScript dependencies.
  */
 
+var setRange = require('selection-set-range');
+var isBackward = require('selection-is-backward');
+var domIterator = require('dom-iterator');
+var contains = require('node-contains');
 var wrapRange = require('wrap-range');
 var unwrapRange = require('unwrap-range');
 var closest = require('component-closest');
@@ -41,23 +45,24 @@ class WrapCommand implements Command {
 
   execute(range?: Range, value?: any): void {
     var hasRange: boolean = !!(range && range instanceof Range);
+    var backward: boolean;
     var selection: Selection;
 
     if (!hasRange) {
       selection = currentSelection(this.document);
+      backward = isBackward(selection);
       range = currentRange(selection);
     }
 
     if (this.queryState(range)) {
-      unwrapRange(range, this.nodeName);
+      unwrapRange(range, this.nodeName, this.document);
     } else {
-      wrapRange(range, this.nodeName);
+      wrapRange(range, this.nodeName, this.document);
     }
 
     if (!hasRange) {
       // when no Range was passed in then we must reset the document's Selection
-      selection.removeAllRanges();
-      selection.addRange(range);
+      setRange(selection, range, backward);
     }
   }
 
@@ -69,8 +74,20 @@ class WrapCommand implements Command {
   queryState(range?: Range): boolean {
     if (!range) range = currentRange(this.document);
     if (!range) return false;
-    var node: HTMLElement = closest(range.commonAncestorContainer, this.nodeName, true);
-    return !! node;
+
+    var next: Node = range.startContainer;
+    var end: Node = range.endContainer;
+
+    var iterator = domIterator(next).revisit(false);
+
+    while (next) {
+      var node: Node = closest(next, this.nodeName, true);
+      if (!node) return false;
+      if (contains(end, next)) break;
+      next = iterator.next(3 /* Node.TEXT_NODE */);
+    }
+
+    return true;
   }
 }
 

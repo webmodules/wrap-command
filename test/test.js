@@ -16,11 +16,11 @@ describe('WrapCommand', function () {
   describe('new WrapCommand("strong")', function () {
 
     it('should create a `WrapCommand` instance', function () {
-      var indent = new WrapCommand('strong');
+      var strong = new WrapCommand('strong');
 
-      assert(indent instanceof WrapCommand);
-      assert.equal('strong', indent.nodeName);
-      assert(indent.document === document);
+      assert(strong instanceof WrapCommand);
+      assert.equal('strong', strong.nodeName);
+      assert(strong.document === document);
     });
 
     describe('execute()', function () {
@@ -35,6 +35,7 @@ describe('WrapCommand', function () {
         var range = document.createRange();
         range.setStart(div.firstChild.firstChild, 1);
         range.setEnd(div.firstChild.firstChild, 4);
+        assert.equal('ell', range.toString());
 
         var sel = window.getSelection();
         sel.removeAllRanges();
@@ -43,16 +44,19 @@ describe('WrapCommand', function () {
         var strong = new WrapCommand('strong');
 
         strong.execute();
+
+        // test that we have the expected HTML at this point
         assert.equal('<p>h<strong>ell</strong>o</p><p>world!</p>', div.innerHTML);
 
         // test that the Selection remains intact
         var sel = window.getSelection();
         range = sel.getRangeAt(0);
 
-        assert(range.startContainer === div.firstChild.childNodes[1]);
+        assert.equal('ell', range.toString());
+        assert(range.startContainer === div.firstChild.childNodes[1].firstChild);
         assert(range.startOffset === 0);
-        assert(range.endContainer === div.firstChild.childNodes[1]);
-        assert(range.endOffset === 1);
+        assert(range.endContainer === div.firstChild.childNodes[1].firstChild);
+        assert(range.endOffset === 3);
       });
 
       it('should remove STRONG elements within document Selection', function () {
@@ -73,6 +77,8 @@ describe('WrapCommand', function () {
         var strong = new WrapCommand('strong');
 
         strong.execute();
+
+        // test that we have the expected HTML at this point
         assert.equal('<p>hello</p><p>world!</p>', div.innerHTML);
 
         // test that the Selection remains intact
@@ -80,12 +86,10 @@ describe('WrapCommand', function () {
         range = sel.getRangeAt(0);
 
         assert.equal('ell', range.toString());
-        /*
         assert(range.startContainer === div.firstChild.childNodes[1]);
         assert(range.startOffset === 0);
         assert(range.endContainer === div.firstChild.childNodes[1]);
-        assert(range.endOffset === 1);
-        */
+        assert(range.endOffset === 3);
       });
 
     });
