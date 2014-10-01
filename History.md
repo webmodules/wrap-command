@@ -1,4 +1,10 @@
 
+1.0.1 / 2014-10-01
+==================
+
+ * package: update "unwrap-range" to v1.0.1
+ * package: update "wrap-range" to v1.0.1
+
 1.0.0 / 2014-10-01
 ==================
 
