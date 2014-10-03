@@ -92,6 +92,30 @@ describe('WrapCommand', function () {
         assert(range.endOffset === 3);
       });
 
+      it('should insert bold text after execute() call', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p>hello world!</p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 3);
+        range.setEnd(div.firstChild.firstChild, 3);
+        assert(range.collapsed);
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+        strong.execute();
+
+        document.execCommand('insertText', false, 'test');
+
+        assert.equal('<p>hel<strong>test</strong>lo world!</p>', div.innerHTML);
+      });
+
     });
 
   });
