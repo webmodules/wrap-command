@@ -77,7 +77,6 @@ class WrapCommand implements Command {
 
     var next: Node = range.startContainer;
     var end: Node = range.endContainer;
-
     var iterator = domIterator(next).revisit(false);
 
     while (next) {
