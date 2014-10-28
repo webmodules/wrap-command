@@ -111,9 +111,10 @@ describe('WrapCommand', function () {
         var strong = new WrapCommand('strong');
         strong.execute();
 
-        document.execCommand('insertText', false, 'test');
-
-        assert.equal('<p>hel<strong>test</strong>lo world!</p>', div.innerHTML);
+        // using "createLink" here since it's the most cross-browser compat
+        // command that inserts some HTML where the current Range selection is
+        document.execCommand('createLink', false, 'test');
+        assert.equal('<p>hel<strong><a href="test">\u200B</a></strong>lo world!</p>', div.innerHTML);
       });
 
     });
