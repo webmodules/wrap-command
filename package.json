@@ -33,14 +33,11 @@
   },
   "homepage": "https://github.com/webmodules/wrap-command",
   "dependencies": {
+    "abstract-command": "~1.0.0",
     "component-closest": "~0.1.4",
-    "current-range": "~1.1.0",
-    "current-selection": "~1.1.0",
     "debug": "~2.0.0",
     "dom-iterator": "~0.3.0",
     "node-contains": "~1.0.0",
-    "selection-is-backward": "~1.0.0",
-    "selection-set-range": "~1.0.0",
     "unwrap-range": "~1.0.1",
     "wrap-range": "~1.0.1"
   },
