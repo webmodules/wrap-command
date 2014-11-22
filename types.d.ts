@@ -1,4 +1,4 @@
-/// <reference path="./require.d.ts" />
+/// <reference path="require.d.ts" />
 
 declare module "component-closest" {
   function closest(element: Node, selector: string, checkYoSelf?: boolean, root?: HTMLElement): HTMLElement;
