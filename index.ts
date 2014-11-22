@@ -15,6 +15,7 @@ import DEBUG = require('debug');
 var debug = DEBUG('wrap-command');
 
 /**
+ * Command implementation based on `wrap-range` and `unwrap-range`.
  *
  * ``` js
  * var bold = new WrapCommand('strong');
