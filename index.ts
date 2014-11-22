@@ -43,13 +43,7 @@ class WrapCommand extends AbstractCommand {
     }
   }
 
-  protected _queryEnabled(range: Range): boolean {
-    return !! range;
-  }
-
   protected _queryState(range: Range): boolean {
-    if (!range) return false;
-
     var next: Node = range.startContainer;
     var end: Node = range.endContainer;
     var iterator = new DomIterator(next).revisit(false);
