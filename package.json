@@ -35,9 +35,8 @@
   "dependencies": {
     "abstract-command": "~2.0.0",
     "component-closest": "~0.1.4",
-    "debug": "~2.0.0",
-    "dom-iterator": "~0.3.0",
-    "node-contains": "~1.0.0",
+    "debug": "2",
+    "range-iterator": "~1.0.0",
     "unwrap-range": "~1.0.1",
     "wrap-range": "~1.0.1"
   },

@@ -6,8 +6,7 @@
 
 import AbstractCommand = require('abstract-command');
 import closest = require('component-closest');
-import contains = require('node-contains');
-import DomIterator = require('dom-iterator');
+import RangeIterator = require('range-iterator');
 import wrapRange = require('wrap-range');
 import unwrapRange = require('unwrap-range');
 import DEBUG = require('debug');
@@ -45,15 +44,12 @@ class WrapCommand extends AbstractCommand {
   }
 
   protected _queryState(range: Range): boolean {
-    var next: Node = range.startContainer;
-    var end: Node = range.endContainer;
-    var iterator = new DomIterator(next).revisit(false);
+    var next: Node;
+    var iterator = new RangeIterator(range)
+      .revisit(false);
 
-    while (next) {
-      var node: Node = closest(next, this.nodeName, true);
-      if (!node) return false;
-      if (contains(end, next)) break;
-      next = iterator.next(3 /* Node.TEXT_NODE */);
+    while (next = iterator.next()) {
+      if (!closest(next, this.nodeName, true)) return false;
     }
 
     return true;
