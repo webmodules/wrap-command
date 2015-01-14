@@ -1,4 +1,10 @@
 
+1.1.1 / 2015-01-14
+==================
+
+  * package: allow any "zuul" v1
+  * index: convert to use "range-iterator"
+
 1.1.0 / 2014-11-21
 ==================
 
