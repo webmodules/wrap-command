@@ -45,14 +45,16 @@ class WrapCommand extends AbstractCommand {
 
   protected _queryState(range: Range): boolean {
     var next: Node;
+    var count: number = 0;
     var iterator = new RangeIterator(range)
       .revisit(false);
 
     while (next = iterator.next()) {
+      count++;
       if (!closest(next, this.nodeName, true)) return false;
     }
 
-    return true;
+    return count > 0;
   }
 }
 
