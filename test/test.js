@@ -121,6 +121,75 @@ describe('WrapCommand', function () {
 
     });
 
+    describe('queryState()', function () {
+
+      it('should return `false` when Selection has no content', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p><br></p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild, 0);
+        range.setEnd(div.firstChild, 0);
+        assert(range.collapsed);
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        assert.equal(false, strong.queryState());
+      });
+
+      it('should return `false` when Selection has no STRONG elements', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p>hello world</p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 0);
+        range.setEnd(div.firstChild.firstChild, div.firstChild.firstChild.nodeValue.length);
+        assert(!range.collapsed);
+        assert.equal('hello world', range.toString());
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        assert.equal(false, strong.queryState());
+      });
+
+      it('should return `true` when all TextNodes in Selection contain STRONG elements', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p><strong>hello</strong><strong> world</strong></p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild.firstChild, 0);
+        range.setEnd(div.lastChild.lastChild.lastChild, div.lastChild.lastChild.lastChild.nodeValue.length);
+        assert(!range.collapsed);
+        assert.equal('hello world', range.toString());
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        assert.equal(true, strong.queryState());
+      });
+
+    });
+
   });
 
 });
