@@ -1,4 +1,10 @@
 
+1.1.2 / 2015-01-15
+==================
+
+  * index: fix failing `queryState()` test
+  * test: add `queryState()` tests
+
 1.1.1 / 2015-01-14
 ==================
 
