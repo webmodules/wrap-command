@@ -36,9 +36,9 @@
     "abstract-command": "~2.0.0",
     "component-closest": "~0.1.4",
     "debug": "2",
-    "range-iterator": "~1.0.0",
-    "unwrap-range": "~1.0.1",
-    "wrap-range": "~1.0.1"
+    "range-iterator": "~1.0.1",
+    "unwrap-range": "~1.0.5",
+    "wrap-range": "~1.1.0"
   },
   "devDependencies": {
     "typescript": "~1.4.1",
