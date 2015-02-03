@@ -1,4 +1,11 @@
 
+1.1.3 / 2015-02-03
+==================
+
+  * package: update all dependencies
+  * package: update "unwrap-range" to v1.1.0
+  * package: update "typescript" to v1.4.1
+
 1.1.2 / 2015-01-15
 ==================
 
