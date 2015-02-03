@@ -37,7 +37,7 @@
     "component-closest": "~0.1.4",
     "debug": "2",
     "range-iterator": "~1.0.1",
-    "unwrap-range": "~1.0.5",
+    "unwrap-range": "~1.1.0",
     "wrap-range": "~1.1.0"
   },
   "devDependencies": {
