@@ -119,6 +119,58 @@ describe('WrapCommand', function () {
         assert.equal('<p>hello world!</p>', div.innerHTML);
       });
 
+      it('should add and remove STRONG elements across 2 P elements', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p>aa</p><p>b</p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 0);
+        range.setEnd(div.lastChild.firstChild, 1);
+        assert.equal('aab', range.toString());
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        // wrap it up!
+        strong.execute();
+
+        // test that we have the expected HTML at this point
+        assert.equal('<p><strong>aa</strong></p><p><strong>b</strong></p>', div.innerHTML);
+
+        // test that the Selection remains intact
+        sel = window.getSelection();
+        range = sel.getRangeAt(0);
+
+        assert.equal('aab', range.toString());
+        assert(range.startContainer === div.firstChild.firstChild.firstChild);
+        assert(range.startOffset === 0);
+        assert(range.endContainer === div.lastChild.firstChild.firstChild);
+        assert(range.endOffset === 1);
+
+
+        // ok, now unwrap!
+        strong.execute();
+
+        // test that we have the expected HTML at this point
+        assert.equal('<p>aa</p><p>b</p>', div.innerHTML);
+
+        // test that the Selection remains intact
+        sel = window.getSelection();
+        range = sel.getRangeAt(0);
+
+        assert.equal('aab', range.toString());
+        assert(range.startContainer === div.firstChild.firstChild);
+        assert(range.startOffset === 0);
+        assert(range.endContainer === div.lastChild.firstChild);
+        assert(range.endOffset === 1);
+      });
+
     });
 
     describe('queryState()', function () {
@@ -178,6 +230,27 @@ describe('WrapCommand', function () {
         range.setEnd(div.lastChild.lastChild.lastChild, div.lastChild.lastChild.lastChild.nodeValue.length);
         assert(!range.collapsed);
         assert.equal('hello world', range.toString());
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        assert.equal(true, strong.queryState());
+      });
+
+      it('should return `true` when all TextNodes in Selection contain STRONG elements across 2 P elements', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p><strong>aa</strong></p><p><strong>b</strong></p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 0);
+        range.setEnd(div.lastChild.firstChild, 1);
+        assert.equal('aab', range.toString());
 
         var sel = window.getSelection();
         sel.removeAllRanges();
