@@ -37,8 +37,8 @@
     "component-closest": "~0.1.4",
     "debug": "2",
     "range-iterator": "~1.0.1",
-    "unwrap-range": "~1.1.0",
-    "wrap-range": "~1.1.0"
+    "unwrap-range": "~1.1.1",
+    "wrap-range": "~1.1.1"
   },
   "devDependencies": {
     "typescript": "~1.4.1",
