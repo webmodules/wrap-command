@@ -49,7 +49,7 @@ describe('WrapCommand', function () {
         assert.equal('<p>h<strong>ell</strong>o</p><p>world!</p>', div.innerHTML);
 
         // test that the Selection remains intact
-        var sel = window.getSelection();
+        sel = window.getSelection();
         range = sel.getRangeAt(0);
 
         assert.equal('ell', range.toString());
@@ -82,7 +82,7 @@ describe('WrapCommand', function () {
         assert.equal('<p>hello</p><p>world!</p>', div.innerHTML);
 
         // test that the Selection remains intact
-        var sel = window.getSelection();
+        sel = window.getSelection();
         range = sel.getRangeAt(0);
 
         assert.equal('ell', range.toString());
