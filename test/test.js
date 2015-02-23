@@ -171,6 +171,69 @@ describe('WrapCommand', function () {
         assert(range.endOffset === 1);
       });
 
+      it('should add and remove STRONG elements across 4 P elements', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p>asdf</p>' +
+                        '<p>asdf</p>' +
+                        '<p>asdf</p>' +
+                        '<p>asdf</p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 0);
+        range.setEnd(div.lastChild.firstChild, 4);
+        assert.equal('asdfasdfasdfasdf', range.toString());
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        for (var i = 0; i < 20; i++) {
+          // wrap it up!
+          strong.execute();
+
+          // test that we have the expected HTML at this point
+          assert.equal('<p><strong>asdf</strong></p>' +
+                       '<p><strong>asdf</strong></p>' +
+                       '<p><strong>asdf</strong></p>' +
+                       '<p><strong>asdf</strong></p>', div.innerHTML);
+
+          // test that the Selection remains intact
+          sel = window.getSelection();
+          range = sel.getRangeAt(0);
+
+          assert.equal('asdfasdfasdfasdf', range.toString());
+          assert(range.startContainer === div.firstChild.firstChild.firstChild);
+          assert(range.startOffset === 0);
+          assert(range.endContainer === div.lastChild.firstChild.firstChild);
+          assert(range.endOffset === 4);
+
+
+          // ok, now unwrap!
+          strong.execute();
+
+          // test that we have the expected HTML at this point
+          assert.equal('<p>asdf</p>' +
+                       '<p>asdf</p>' +
+                       '<p>asdf</p>' +
+                       '<p>asdf</p>', div.innerHTML);
+
+          // test that the Selection remains intact
+          sel = window.getSelection();
+          range = sel.getRangeAt(0);
+
+          assert.equal('asdfasdfasdfasdf', range.toString());
+          assert(range.startContainer === div.firstChild.firstChild);
+          assert(range.startOffset === 0);
+          assert(range.endContainer === div.lastChild.firstChild);
+          assert(range.endOffset === 4);
+        }
+      });
+
     });
 
     describe('queryState()', function () {
