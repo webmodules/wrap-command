@@ -1,4 +1,10 @@
 
+1.1.5 / 2015-02-23
+==================
+
+  * test: add a 4 P elements test case
+  * package: update "unwrap-node" and "wrap-node" to v1.1.1
+
 1.1.4 / 2015-02-23
 ==================
 
