@@ -1,4 +1,11 @@
 
+1.1.4 / 2015-02-23
+==================
+
+  * index: only iterate over nodes without any children
+  * test: don't re-define `sel` var
+  * test: add test cases for spanning across 2 P elements
+
 1.1.3 / 2015-02-03
 ==================
 
