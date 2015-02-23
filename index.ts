@@ -47,6 +47,10 @@ class WrapCommand extends AbstractCommand {
     var next: Node;
     var count: number = 0;
     var iterator = new RangeIterator(range)
+      .select(function (node) {
+        // void elements, elements with no children, text nodes
+        return node.childNodes.length === 0;
+      })
       .revisit(false);
 
     while (next = iterator.next()) {
