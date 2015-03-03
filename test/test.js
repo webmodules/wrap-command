@@ -171,7 +171,7 @@ describe('WrapCommand', function () {
         assert(range.endOffset === 1);
       });
 
-      it('should add and remove STRONG elements across 4 P elements', function () {
+      it('should add and remove STRONG elements multiple times across 4 P elements', function () {
         div = document.createElement('div');
         div.innerHTML = '<p>asdf</p>' +
                         '<p>asdf</p>' +
@@ -231,6 +231,60 @@ describe('WrapCommand', function () {
           assert(range.startOffset === 0);
           assert(range.endContainer === div.lastChild.firstChild);
           assert(range.endOffset === 4);
+        }
+      });
+
+      it('should add and remove STRONG elements multiple times in collapsed Range', function () {
+        div = document.createElement('div');
+        div.innerHTML = '<p>asdf</p>';
+        div.setAttribute('contenteditable', 'true');
+        document.body.appendChild(div);
+
+        // set current selection
+        var range = document.createRange();
+        range.setStart(div.firstChild.firstChild, 2);
+        range.setEnd(div.firstChild.firstChild, 2);
+        assert(range.collapsed);
+
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+
+        var strong = new WrapCommand('strong');
+
+        for (var i = 0; i < 20; i++) {
+          // wrap it up!
+          strong.execute();
+
+          // test that we have the expected HTML at this point
+          assert.equal('<p>as<strong><span class="zwsp">\u200B</span></strong>df</p>', div.innerHTML);
+
+          // test that the Selection remains intact
+          sel = window.getSelection();
+          range = sel.getRangeAt(0);
+
+          assert(range.collapsed);
+          assert(range.startContainer === div.firstChild.childNodes[1].firstChild.firstChild);
+          assert(range.startOffset === 1);
+          assert(range.endContainer === div.firstChild.childNodes[1].firstChild.firstChild);
+          assert(range.endOffset === 1);
+
+
+          // ok, now unwrap!
+          strong.execute();
+
+          // test that we have the expected HTML at this point
+          assert.equal('<p>as<span class="zwsp">\u200B</span>df</p>', div.innerHTML);
+
+          // test that the Selection remains intact
+          sel = window.getSelection();
+          range = sel.getRangeAt(0);
+
+          assert(range.collapsed);
+          assert(range.startContainer === div.firstChild.childNodes[1].firstChild);
+          assert(range.startOffset === 1);
+          assert(range.endContainer === div.firstChild.childNodes[1].firstChild);
+          assert(range.endOffset === 1);
         }
       });
 
