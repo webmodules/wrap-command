@@ -111,7 +111,7 @@ describe('WrapCommand', function () {
         var strong = new WrapCommand('strong');
         strong.execute();
 
-        assert.equal('<p>hel<strong>\u200B</strong>lo world!</p>', div.innerHTML);
+        assert.equal('<p>hel<strong><span class="zwsp">\u200B</span></strong>lo world!</p>', div.innerHTML);
 
         // using "delete" here since it's the most cross-browser compat
         // command that operates on where the current Range selection is
