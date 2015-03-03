@@ -1,4 +1,11 @@
 
+2.0.0 / 2015-03-03
+==================
+
+  * package: update "wrap-range" and "unwrap-range" to v2.0.0
+  * package: allow any "zuul" v2
+  * test: fix failing test case
+
 1.1.5 / 2015-02-23
 ==================
 
