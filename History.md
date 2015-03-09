@@ -1,4 +1,10 @@
 
+2.0.1 / 2015-03-09
+==================
+
+  * update to RangeIterator v2 API
+  * test: add a collapsed range wrap/unwrap loop test case
+
 2.0.0 / 2015-03-03
 ==================
 
