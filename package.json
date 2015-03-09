@@ -36,7 +36,7 @@
     "abstract-command": "~2.0.0",
     "component-closest": "~0.1.4",
     "debug": "2",
-    "range-iterator": "~1.0.1",
+    "range-iterator": "~2.0.0",
     "unwrap-range": "~2.0.0",
     "wrap-range": "~2.0.0"
   },
